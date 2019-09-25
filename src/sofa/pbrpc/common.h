@@ -4,16 +4,36 @@
 
 #ifndef _SOFA_PBRPC_COMMON_H_
 #define _SOFA_PBRPC_COMMON_H_
+#define _SOFA_PBRPC_SMART_PTR_SHARED_PTR_
+#define _SOFA_PBRPC_SMART_PTR_ENABLE_SHARED_FROM_THIS_
 
 #include <stdarg.h>
 #include <google/protobuf/stubs/common.h>
 
-#include <sofa/pbrpc/smart_ptr/smart_ptr.hpp>
+#include <memory>
 
 namespace std {}
 
 namespace sofa {
 namespace pbrpc {
+using std::enable_shared_from_this;
+using std::shared_ptr;
+using std::unique_ptr;
+using std::weak_ptr;
+#define scoped_ptr unique_ptr
+using std::dynamic_pointer_cast;
+template <typename T>
+T* get_pointer(std::shared_ptr<T> const& ptr) {
+  return ptr.get();
+}
+template <typename T>
+T* get_pointer(std::unique_ptr<T> const& ptr) {
+  return ptr.get();
+}
+template <typename T>
+T* get_pointer(std::weak_ptr<T> const& ptr) {
+  return ptr.get();
+}
 
 #define SOFA_PBRPC_VERSION "1.1.1"
 
