@@ -47,7 +47,9 @@ typedef unsigned __int64 uint64_t;
 // RAPIDJSON_SSE2/RAPIDJSON_SSE42/RAPIDJSON_SIMD
 
 // Enable SSE2 optimization.
+#ifdef __SSE2__
 #define RAPIDJSON_SSE2
+#endif
 
 // Enable SSE4.2 optimization.
 //#define RAPIDJSON_SSE42
