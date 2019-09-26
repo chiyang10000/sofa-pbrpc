@@ -9,7 +9,6 @@
 #include <boost/function.hpp>
 
 #include <sofa/pbrpc/common.h>
-#include <sofa/pbrpc/atomic.h>
 #include <sofa/pbrpc/counter.h>
 #include <sofa/pbrpc/func_tracer.h>
 #include <sofa/pbrpc/io_service.h>

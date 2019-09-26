@@ -5,9 +5,17 @@
 #ifndef _SOFA_PBRPC_ATOMIC_H_
 #define _SOFA_PBRPC_ATOMIC_H_
 
-#if !defined(__i386__) && !defined(__x86_64__)
+#if defined(__clang__) || defined(__GNUC__)
+#define atomic_inc_ret_old(ptr) __sync_fetch_and_add(ptr, 1)
+#define atomic_dec_ret_old(ptr) __sync_fetch_and_sub(ptr, 1)
+#define atomic_inc_ret_old64(ptr) __sync_fetch_and_add(ptr, 1)
+#define atomic_dec_ret_old64(ptr) __sync_fetch_and_sub(ptr, 1)
+#define atomic_inc(ptr) __sync_fetch_and_add(ptr, 1)
+#define atomic_comp_swap(ptr, val, cmp) __sync_val_compare_and_swap(ptr, cmp, val)
+#define atomic_swap(ptr, val) __atomic_exchange_n(ptr, val, __ATOMIC_ACQ_REL)
+#elif !defined(__i386__) && !defined(__x86_64__)
 #error    "Arch not supprot!"
-#endif
+#else
 
 #include <stdint.h>
 
@@ -95,6 +103,7 @@ inline T atomic_comp_swap(volatile T* lockword, E exchange, C comperand)
 
 } // namespace pbrpc
 } // namespace sofa
+#endif
 
 #endif // _SOFA_PBRPC_ATOMIC_H_
 
