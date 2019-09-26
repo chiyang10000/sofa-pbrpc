@@ -72,7 +72,7 @@ public:
     // * The block pointed by "p" was allocated by this pool and is in use currently.
     inline static void add_ref(void * p)
     {
-        sofa::pbrpc::atomic_inc(reinterpret_cast<int*>(p) - 1);
+        atomic_inc(reinterpret_cast<int*>(p) - 1);
     }
 
     // Decrease the reference count of the block.  If the reference count equals
@@ -82,7 +82,7 @@ public:
     // * The block pointed by "p" was allocated by this pool and is in use currently.
     inline static void free(void * p)
     {
-        if (sofa::pbrpc::atomic_dec_ret_old(reinterpret_cast<int*>(p) - 1) == 1)
+        if (atomic_dec_ret_old(reinterpret_cast<int*>(p) - 1) == 1)
         {
             ::free(reinterpret_cast<int*>(p) - 2);
         }
